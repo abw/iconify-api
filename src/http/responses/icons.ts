@@ -17,7 +17,7 @@ export function generateIconsDataResponse(
 
 	if (!names || !names.length) {
 		// Missing or invalid icons parameter
-		res.send(404);
+		res.code(400).send('Missing or invalid icons parameter');
 		return;
 	}
 
@@ -25,7 +25,7 @@ export function generateIconsDataResponse(
 	const wrap = checkJSONPQuery(q, wrapJS, 'SimpleSVG._loaderCallback');
 	if (!wrap) {
 		// Invalid JSONP callback
-		res.send(400);
+		res.code(400).send('Invalid JSONP callback');
 		return;
 	}
 
@@ -33,7 +33,7 @@ export function generateIconsDataResponse(
 	const iconSet = iconSets[prefix];
 	if (!iconSet) {
 		// No such icon set
-		res.send(404);
+		res.code(404).send('No such icon set');
 		return;
 	}
 

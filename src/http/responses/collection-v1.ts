@@ -29,7 +29,7 @@ export function generateAPIv1IconsListResponse(
 	const wrap = checkJSONPQuery(q);
 	if (!wrap) {
 		// Invalid JSONP callback
-		res.send(400);
+		res.code(400).send('Invalid JSONP callback');
 		return;
 	}
 
@@ -85,7 +85,7 @@ export function generateAPIv1IconsListResponse(
 		const prefix = q.prefix;
 		const iconSet = iconSets[prefix]?.item;
 		if (!iconSet || !iconSet.apiV2IconsCache) {
-			res.send(404);
+			res.code(404).send('Icons cache is not available');
 			return;
 		}
 		sendJSONResponse(parse(prefix, iconSet, iconSet.apiV2IconsCache), q, wrap, res);
@@ -125,7 +125,7 @@ export function generateAPIv1IconsListResponse(
 
 		if (!items.length) {
 			// Empty list
-			res.send(404);
+			res.code(404).send('No items');
 			return;
 		}
 
@@ -140,5 +140,5 @@ export function generateAPIv1IconsListResponse(
 	}
 
 	// Invalid
-	res.send(400);
+	res.code(400).send('Invalid');
 }

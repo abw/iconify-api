@@ -13,14 +13,14 @@ export function generateKeywordsResponse(query: FastifyRequest['query'], res: Fa
 	const wrap = checkJSONPQuery(q);
 	if (!wrap) {
 		// Invalid JSONP callback
-		res.send(400);
+		res.code(400).send('Invalid JSONP callback')
 		return;
 	}
 
 	// Check if search data is available
 	const searchIndexData = searchIndex.data;
 	if (!searchIndexData) {
-		res.send(404);
+		res.code(404).send('Search index not available');
 		return;
 	}
 	const keywords = searchIndexData.keywords;
@@ -39,7 +39,7 @@ export function generateKeywordsResponse(query: FastifyRequest['query'], res: Fa
 		suffixes = true;
 	} else {
 		// Invalid query
-		res.send(400);
+		res.code(400).send('Invalid query');
 		return;
 	}
 	test = test.toLowerCase().trim();

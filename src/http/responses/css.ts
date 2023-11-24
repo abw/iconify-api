@@ -26,7 +26,7 @@ export function generateIconsStyleResponse(prefix: string, query: FastifyRequest
 
 	if (!names || !names.length) {
 		// Missing or invalid icons parameter
-		res.send(404);
+		res.code(400).send('Missing or invalid icons parameter');
 		return;
 	}
 
@@ -34,7 +34,7 @@ export function generateIconsStyleResponse(prefix: string, query: FastifyRequest
 	const iconSet = iconSets[prefix];
 	if (!iconSet) {
 		// No such icon set
-		res.send(404);
+		res.code(404).send('No such icon set');
 		return;
 	}
 

@@ -12,7 +12,7 @@ export function generateSVGResponse(prefix: string, name: string, query: Fastify
 	const iconSetItem = iconSets[prefix]?.item;
 	if (!iconSetItem) {
 		// No such icon set
-		res.send(404);
+		res.code(404).send(`No such icon set`)
 		return;
 	}
 
@@ -20,7 +20,7 @@ export function generateSVGResponse(prefix: string, name: string, query: Fastify
 	const icons = iconSetItem.icons;
 	if (!(icons.visible[name] || icons.hidden[name]) && !iconSetItem.icons.chars?.[name]) {
 		// No such icon
-		res.send(404);
+		res.code(404).send(`No such icon`)
 		return;
 	}
 
@@ -28,7 +28,7 @@ export function generateSVGResponse(prefix: string, name: string, query: Fastify
 	getStoredIconData(iconSetItem, name, (data) => {
 		if (!data) {
 			// Invalid icon
-			res.send(404);
+			res.code(400).send(`Invalid icon`)
 			return;
 		}
 

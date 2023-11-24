@@ -17,7 +17,7 @@ export function generateCollectionsListResponse(query: FastifyRequest['query'], 
 	const wrap = checkJSONPQuery(q);
 	if (!wrap) {
 		// Invalid JSONP callback
-		res.send(400);
+		res.code(400).send('Invalid JSONP callback');
 		return;
 	}
 

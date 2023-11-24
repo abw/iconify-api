@@ -18,14 +18,14 @@ export function generateAPIv2CollectionResponse(query: FastifyRequest['query'], 
 	const wrap = checkJSONPQuery(q);
 	if (!wrap) {
 		// Invalid JSONP callback
-		res.send(400);
+		res.code(400).send('Invalid JSONP callback');
 		return;
 	}
 
 	// Get icon set
 	const prefix = q.prefix;
 	if (!prefix || !iconSets[prefix]) {
-		res.send(404);
+		res.code(404).send('Missing or invalid icon set');
 		return;
 	}
 
@@ -33,7 +33,7 @@ export function generateAPIv2CollectionResponse(query: FastifyRequest['query'], 
 	const apiV2IconsCache = iconSet.apiV2IconsCache;
 	if (!apiV2IconsCache) {
 		// Disabled
-		res.send(404);
+		res.code(404).send('Icons cache is not available');
 		return;
 	}
 

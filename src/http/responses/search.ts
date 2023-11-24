@@ -20,21 +20,21 @@ export function generateAPIv2SearchResponse(query: FastifyRequest['query'], res:
 	const wrap = checkJSONPQuery(q);
 	if (!wrap) {
 		// Invalid JSONP callback
-		res.send(400);
+		res.code(400).send(`Invalid JSONP callback`);
 		return;
 	}
 
 	// Check if search data is available
 	const searchIndexData = searchIndex.data;
 	if (!searchIndexData) {
-		res.send(404);
+		res.code(404).send(`Search index not available`);
 		return;
 	}
 
 	// Get query
 	const keyword = q.query;
 	if (!keyword) {
-		res.send(400);
+		res.code(400).send(`Missing query keyword`);
 		return;
 	}
 
@@ -49,7 +49,7 @@ export function generateAPIv2SearchResponse(query: FastifyRequest['query'], res:
 	if (v2Query.limit) {
 		const limit = parseInt(v2Query.limit);
 		if (!limit) {
-			res.send(400);
+			res.code(400).send(`No limit`);
 			return;
 		}
 		params.limit = Math.max(minSearchLimit, Math.min(limit, maxSearchLimit));
@@ -59,7 +59,7 @@ export function generateAPIv2SearchResponse(query: FastifyRequest['query'], res:
 	if (v2Query.start) {
 		start = parseInt(v2Query.start);
 		if (isNaN(start) || start < 0 || start >= params.limit) {
-			res.send(400);
+			res.code(400).send(`Missing or invalid start`);
 			return;
 		}
 	}
