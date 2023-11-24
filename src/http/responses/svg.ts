@@ -28,7 +28,7 @@ export function generateSVGResponse(prefix: string, name: string, query: Fastify
 	getStoredIconData(iconSetItem, name, (data) => {
 		if (!data) {
 			// Invalid icon
-			res.code(400).send(`Invalid icon`)
+			res.code(404).send(`Invalid icon`)
 			return;
 		}
 
